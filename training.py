@@ -1,9 +1,9 @@
 import os
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.models import Sequential, load_model
-from tensorflow.keras.layers import Dense, Embedding, GlobalAveragePooling1D
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+from keras.models import Sequential, load_model
+from keras.layers import Dense, Embedding, GlobalAveragePooling1D
+from keras.preprocessing.sequence import pad_sequences
 import pickle
 import pandas as pd
 
@@ -11,18 +11,17 @@ import pandas as pd
 VOCAB_SIZE = 10000
 MAX_LEN = 250
 EMBEDDING_DIM = 16
-MODEL_PATH = 'sentiment_analysis_model.h5'
+MODEL_PATH = 'sentiment_analysis_model.keras'
 
-file_path = 'data.csv'
+file_path = 'data.csv'  # https://www.kaggle.com/datasets/kazanova/sentiment140
 data = pd.read_csv(file_path, encoding='ISO-8859-1')
 df_shuffled = data.sample(frac=1).reset_index(drop=True)
 
 texts = []
 labels = []
-
 for _, row in df_shuffled.iterrows():
-    texts.append(row[-1])
-    label = row[0]
+    texts.append(row.iloc[-1])
+    label = row.iloc[0]
     labels.append(0 if label == 0 else 1 if label == 2 else 2)
 
 texts = np.array(texts)
@@ -32,7 +31,7 @@ labels = np.array(labels)
 tokenizer = tf.keras.preprocessing.text.Tokenizer(num_words=VOCAB_SIZE)
 tokenizer.fit_on_texts(texts)
 sequences = tokenizer.texts_to_sequences(texts)
-padded_sequences = pad_sequences(sequences, maxlen=MAX_LEN, value=VOCAB_SIZE-1, padding='post')
+padded_sequences = pad_sequences(sequences, maxlen=MAX_LEN, value=VOCAB_SIZE - 1, padding='post')
 
 # Save the tokenizer to a file
 with open('tokenizer.pickle', 'wb') as handle:
@@ -52,7 +51,7 @@ else:
     print("Training a new model...")
     # Define the model
     model = Sequential([
-        Embedding(VOCAB_SIZE, EMBEDDING_DIM, input_length=MAX_LEN),
+        Embedding(VOCAB_SIZE, EMBEDDING_DIM),
         GlobalAveragePooling1D(),
         Dense(16, activation='relu'),
         Dense(3, activation='softmax')  # 3 classes: negative, neutral, positive
@@ -71,17 +70,19 @@ else:
 loss, accuracy = model.evaluate(test_data, test_labels)
 print(f"Test accuracy: {accuracy * 100:.2f}%")
 
+
 # Interactive loop for predictions
 def encode_text(text):
     tokens = tf.keras.preprocessing.text.text_to_word_sequence(text)
     tokens = [tokenizer.word_index[word] if word in tokenizer.word_index else 0 for word in tokens]
-    return pad_sequences([tokens], maxlen=MAX_LEN, padding='post', value=VOCAB_SIZE-1)
+    return pad_sequences([tokens], maxlen=MAX_LEN, padding='post', value=VOCAB_SIZE - 1)
+
 
 while True:
     user_input = input("Enter a sentence for sentiment analysis (or 'exit' to quit): ")
     if user_input.lower() == 'exit':
         break
-    
+
     encoded_input = encode_text(user_input)
     prediction = np.argmax(model.predict(encoded_input))
 
@@ -92,4 +93,5 @@ while True:
     else:
         print("Sentiment: Positive")
 
-# you need to download the training data from here: https://www.kaggle.com/datasets/kazanova/sentiment140?resource=download
+# you need to download the training data from here:
+# https://www.kaggle.com/datasets/kazanova/sentiment140?resource=download

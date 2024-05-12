@@ -1,11 +1,11 @@
-from flask import Flask, request, request, render_template
+from flask import Flask, request, render_template
 from predict import predict_sentiments
 from youtube import get_video_comments
 from flask_cors import CORS
-import requests
 
 app = Flask(__name__)
 CORS(app)
+
 
 def get_video(video_id):
     if not video_id:
@@ -21,7 +21,7 @@ def get_video(video_id):
         "positive": positive,
         "negative": negative,
         "num_comments": len(comments),
-        "rating": (positive / len(comments)) * 100
+        "rating": (positive / len(comments)) * 100 if len(comments) != 0 else 0
     }
 
     return {"predictions": predictions, "comments": comments, "summary": summary}
@@ -39,6 +39,7 @@ def index():
         summary = data['summary']
         comments = list(zip(data['comments'], data['predictions']))
     return render_template('index.html', summary=summary, comments=comments)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

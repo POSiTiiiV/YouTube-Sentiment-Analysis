@@ -1,4 +1,3 @@
-import os
 import googleapiclient.discovery
 import googleapiclient.errors
 import os
@@ -6,6 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 api_key = os.getenv("API_KEY")
+
 
 def get_comments(youtube, **kwargs):
     comments = []
@@ -25,6 +25,7 @@ def get_comments(youtube, **kwargs):
 
     return comments
 
+
 def main(video_id, api_key):
     # Disable OAuthlib's HTTPs verification when running locally.
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
@@ -38,4 +39,3 @@ def main(video_id, api_key):
 
 def get_video_comments(video_id):
     return main(video_id, api_key)
-

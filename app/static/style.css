@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body{
+    font-family: 'Bebas Neue', sans-serif;
+    background-color: #69748f;
+    margin: 0;
+    padding: 0;
+    color: #e1e1e1;
+    overflow-x: hidden;
+}
+.heading1{
+    height: 800px;
+    margin: 0;
+}
+.form1{
+    width: 100% ;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+.form1textbox::placeholder{
+    font-size: 1.2em;
+}
+.form1textbox{
+    border-radius: 5px;
+    padding: 15px;
+    width: 30%;
+    border: 2px solid #ED9455;
+    margin: 0 20px;
+}
+.form1submit{
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1em;
+    background: #ED9455;
+    color: white;
+    border-radius: 5px;
+    padding: 15px 40px;
+    border: 2px solid #ED9455;
+}
