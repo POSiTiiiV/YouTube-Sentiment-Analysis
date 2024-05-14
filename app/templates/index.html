@@ -22,35 +22,42 @@
 
 <body>
     <div class="heading1">
-        <img src="../static/home1.jpg" alt="home1" style="background:#eaaa01;width:100%;height:80%;object-fit:contain;filter:brightness(20%);position: absolute;top:0;z-index: -1">
-        <h1 style="margin: 80px auto; padding:20px;text-align: center; font-size: 3.52em;letter-spacing: 4px">YouTube Sentiment Analysis</h1>
-        <form class="form1" action="/" method="post">
-            <input class="form1textbox" type="text" name="video_url" placeholder="Enter YouTube URL" required>
-            <input class="form1submit" type="submit" value="Analyze">
-        </form>
+        <img src="../static/home1.jpg" alt="home1" style="background:#eaaa01;width:100%;height:100%;object-fit:contain;position: absolute;top:0;z-index: -1;">
+        <div class="box1">
+            <div class="backbox"></div> 
+            <h1 style="margin: 80px 0 50px 0;text-align: center; font-size: 3.52em;letter-spacing: 4px;font-family: 'Bebas Neue', sans-serif;">YouTube Sentiment Analysis</h1>
+            <form class="form1" action="/" method="post">
+                <input class="form1textbox" type="text" name="video_url" placeholder="Enter YouTube URL" required>
+                <input class="form1submit" type="submit" value="Analyze">
+            </form>
+        </div>
     </div>
 
-    {% if summary %}
-    <h2>Text Summary</h2>
-    <p>Positive: {{ summary['positive'] }}</p>
-    <p>Negative: {{ summary['negative'] }}</p>
-    <p>Number of Comments: {{ summary['num_comments'] }}</p>
-    <p>Rating: {{ summary['rating'] }}%</p>
+    <div class="b2head"style="text-align: center; font-size: 2.5em;font-family: 'Bebas Neue', sans-serif;">Text Summary</div>
+    <div class="box2">
+        {% if summary %}
+        <p>Positive Comments: {{ summary['positive'] }}</p>
+        <p>Negative Comments: {{ summary['negative'] }}</p>
+        <p>Number of Comments: {{ summary['num_comments'] }}</p>
+        <p>Rating: {{ summary['rating'] }}%</p>
+    </div>
 
-    <h3>Comments</h3>
-    <table>
-        <tr>
-            <th>Comment</th>
-            <th>Sentiment</th>
-        </tr>
-        {% for comment, sentiment in comments %}
-        <tr>
-            <td>{{ comment }}</td>
-            <td>{{ sentiment }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% endif %}
+    <div class="box3">
+        <div style="text-align: center; font-size: 2.5em;font-family: 'Bebas Neue', sans-serif;" >Comments</div>
+        <table>
+            <tr>
+                <th>Comment</th>
+                <th>Sentiment</th>
+            </tr>
+            {% for comment, sentiment in comments %}
+            <tr>
+                <td>{{ comment }}</td>
+                <td>{{ sentiment }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
 
 </body>
 
