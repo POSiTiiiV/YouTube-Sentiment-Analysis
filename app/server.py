@@ -2,8 +2,10 @@ from flask import Flask, request, render_template
 from predict import predict_sentiments
 from youtube import get_video_comments
 from flask_cors import CORS
+from flask import session
 
 app = Flask(__name__)
+app.secret_key = 'my_secret_key'
 CORS(app)
 
 
@@ -37,16 +39,14 @@ def index():
         data = get_video(video_id)
 
         summary = data['summary']
+        comments = list(zip(data['comments'], data['predictions']))
+        session['comments'] = comments
     return render_template('index.html', summary=summary)
 
 
 @app.route('/newpage')
 def newPage():
-    video_url = request.form.get('video_url')
-    video_id = video_url.split("v=")[1]
-    data = get_video(video_id)
-
-    comments = list(zip(data['comments'], data['predictions']))
+    comments = session.get('comments', [])  # retrieve the comments from the session
     return render_template('newpage.html', comments=comments)
 
 
