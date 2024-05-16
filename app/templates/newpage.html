@@ -5,34 +5,29 @@
     <link rel="stylesheet" href="../static/style.css">
     <style>
         table {
-            margin: 20px auto;
             border-collapse: collapse;
-            width: 90%;
+            width: 100%;
             table-layout: fixed;
         }
         th,
         td {
-            padding: 10px;
-            border: 1px solid #ddd;
+            padding: 20px;
             word-wrap: break-word;
         }
     </style>
 </head>
 <body>
-    <div class="box3">
-        <div style="text-align: center; font-size: 2.5em;font-family: 'Bebas Neue', sans-serif;" >Comments</div>
-        <table>
-            <tr>
-                <th>Comment</th>
-                <th>Sentiment</th>
-            </tr>
-            {% for comment, sentiment in comments %}
-            <tr>
-                <td>{{ comment }}</td>
-                <td>{{ sentiment }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
+    <table style="border: 2px solid #d4b77d;">
+        <tr style="background: #d4b77d;">
+            <th style="width: 70%;border-right: 2px solid #e2daca;">COMMENT</th>
+            <th>SENTIMENT</th>
+        </tr>
+        {% for comment, sentiment in comments %}
+        <tr>
+            <td style="text-align: justify;border: 2px solid #d4b77d;">{{ comment }}</td>
+            <td style="text-align: center;border: 2px solid #d4b77d;"">{{ sentiment }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>
