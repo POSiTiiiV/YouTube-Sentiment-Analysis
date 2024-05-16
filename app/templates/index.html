@@ -4,20 +4,28 @@
 <head>
     <title>YouTube Sentiment Analysis</title>
     <link rel="stylesheet" href="../static/style.css">
-    <style>
-        table {
-            margin: 20px auto;
-            border-collapse: collapse;
-            width: 90%;
-            table-layout: fixed;
-        }
-        th,
-        td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            word-wrap: break-word;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+    window.onload = function() {
+        var ctx = document.getElementById('sentimentChart').getContext('2d');
+        var positive = {{ summary['positive'] }};
+        var negative = {{ summary['negative'] }};
+        var chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Positive', 'Negative'],
+                datasets: [{
+                    data: [positive, negative],
+                    backgroundColor: ['green', 'red']
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    };
+    </script>
 </head>
 
 <body>
@@ -33,31 +41,19 @@
         </div>
     </div>
 
-    <div class="b2head"style="text-align: center; font-size: 2.5em;font-family: 'Bebas Neue', sans-serif;">Text Summary</div>
+    <div style="height: 400px; width: 400px; display: flex; align-items: center">
+        <canvas id="sentimentChart" style="width: 100px; height: 100px;"></canvas>
+    </div>
+
+    <div class="b2head" style="text-align: center; font-size: 2.5em;font-family: 'Bebas Neue', sans-serif;">Text Summary</div>
     <div class="box2">
-        {% if summary %}
         <p>Positive Comments: {{ summary['positive'] }}</p>
         <p>Negative Comments: {{ summary['negative'] }}</p>
         <p>Number of Comments: {{ summary['num_comments'] }}</p>
         <p>Rating: {{ summary['rating'] }}%</p>
     </div>
 
-    <div class="box3">
-        <div style="text-align: center; font-size: 2.5em;font-family: 'Bebas Neue', sans-serif;" >Comments</div>
-        <table>
-            <tr>
-                <th>Comment</th>
-                <th>Sentiment</th>
-            </tr>
-            {% for comment, sentiment in comments %}
-            <tr>
-                <td>{{ comment }}</td>
-                <td>{{ sentiment }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        {% endif %}
-    </div>
+
 
 </body>
 

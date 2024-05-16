@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comments</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <style>
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 90%;
+            table-layout: fixed;
+        }
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="box3">
+        <div style="text-align: center; font-size: 2.5em;font-family: 'Bebas Neue', sans-serif;" >Comments</div>
+        <table>
+            <tr>
+                <th>Comment</th>
+                <th>Sentiment</th>
+            </tr>
+            {{ comments }}
+            {% for comment, sentiment in comments %}
+            <tr>
+                <td>{{ comment }}</td>
+                <td>{{ sentiment }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
