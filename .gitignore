@@ -4,3 +4,4 @@ data.csv
 .idea/misc.xml
 /.idea
 *.xml
+/app/__pycache__
